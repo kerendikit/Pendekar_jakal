@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendekar Jakal - Komunitas Mobile Legends</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #ff6b35;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff6b35;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b35;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23667eea;stop-opacity:1" /><stop offset="100%" style="stop-color:%23764ba2;stop-opacity:1" /></linearGradient></defs><rect width="1200" height="600" fill="url(%23grad)"/></svg>');
+            background-size: cover;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section {
+            margin: 4rem 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #ff6b35;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .hero-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .hero-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
+        }
+
+        .hero-card h3 {
+            color: #ff6b35;
+            margin-bottom: 1rem;
+        }
+
+        .meta-badge {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .news-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .news-card-content {
+            padding: 1.5rem;
+        }
+
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.3s, background 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 107, 53, 0.3);
+        }
+
+        .youtube-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+        .youtube-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #ff6b35;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 107, 53, 0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tab-button {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            transform: translateY(-2px);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            
+            .social-media {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles -->
+    <div class="floating-particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Pendekar Jakal</a>
+            <ul class="nav-links">
+                <li><a onclick="scrollToSection('hero')">Home</a></li>
+                <li><a onclick="scrollToSection('profile')">Profile</a></li>
+                <li><a onclick="scrollToSection('heroes')">Heroes Meta</a></li>
+                <li><a onclick="scrollToSection('items')">Items</a></li>
+                <li><a onclick="scrollToSection('news')">Berita</a></li>
+                <li><a onclick="scrollToSection('live')">Live MPL</a></li>
+                <li><a onclick="scrollToSection('social')">Social Media</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>Pendekar Jakal</h1>
+            <p>Komunitas Mobile Legends Elite Indonesia</p>
+            <button class="cta-button" onclick="scrollToSection('profile')">Bergabung Sekarang</button>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Profile Section -->
+        <section id="profile" class="section">
+            <h2><i class="fas fa-users"></i> Profile Komunitas</h2>
+            <div class="profile-grid">
+                <div class="profile-card">
+                    <h3><i class="fas fa-crown"></i> Tentang Pendekar Jakal</h3>
+                    <p>Pendekar Jakal adalah komunitas Mobile Legends yang terdiri dari para pemain elite Indonesia. Kami fokus pada pengembangan skill, strategi tim, dan kompetisi tingkat tinggi.</p>
+                </div>
+                <div class="profile-card">
+                    <h3><i class="fas fa-trophy"></i> Prestasi</h3>
+                    <p>• Juara 2 Tournament Burjo Borneo UII 2025<br>
+                    • top 6 porsemantik UII 2025<br>
+                    • 15+ Member Aktif<br>
+                    • Rating Mythic Glory rata-rata</p>
+                </div>
+                <div class="profile-card">
+                    <h3><i class="fas fa-gamepad"></i> Aktivitas</h3>
+                    <p>• Scrim harian untuk member<br>
+                    • Tournament internal mingguan<br>
+                    • Coaching session dengan pro player<br>
+                    • Live streaming dan content creation</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Heroes Meta Section -->
+        <section id="heroes" class="section">
+            <h2><i class="fas fa-fire"></i> Heroes Meta Terkini</h2>
+            <div class="tab-container">
+                <button class="tab-button active" onclick="showTab('tank')">Tank</button>
+                <button class="tab-button" onclick="showTab('fighter')">Fighter</button>
+                <button class="tab-button" onclick="showTab('assassin')">Assassin</button>
+                <button class="tab-button" onclick="showTab('mage')">Mage</button>
+                <button class="tab-button" onclick="showTab('marksman')">Marksman</button>
+                <button class="tab-button" onclick="showTab('support')">Support</button>
+            </div>
+
+            <div id="tank" class="tab-content active">
+                <div class="hero-grid">
+                    <div class="hero-card" onclick="analyzeHero('Khufra')">
+                        <div class="meta-badge">S-Tier Meta</div>
+                        <h3>Khufra</h3>
+                        <p>Tank dengan crowd control terbaik untuk meta saat ini. Sangat efektif melawan hero mobility tinggi.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 68.5% | Pick Rate: 45.2%</small>
+                    </div>
+                    <div class="hero-card" onclick="analyzeHero('Atlas')">
+                        <div class="meta-badge">S-Tier Meta</div>
+                        <h3>Atlas</h3>
+                        <p>Initiator terbaik dengan ultimate yang dapat mengubah jalannya team fight secara instan.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 65.3% | Pick Rate: 38.7%</small>
+                    </div>
+                    <div class="hero-card" onclick="analyzeHero('Johnson')">
+                        <div class="meta-badge">A-Tier Meta</div>
+                        <h3>Johnson</h3>
+                        <p>Tank dengan mobilitas tinggi, perfect untuk rotasi cepat dan gank surprise.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 62.1% | Pick Rate: 32.4%</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="fighter" class="tab-content">
+                <div class="hero-grid">
+                    <div class="hero-card" onclick="analyzeHero('Paquito')">
+                        <div class="meta-badge">S-Tier Meta</div>
+                        <h3>Paquito</h3>
+                        <p>Fighter dengan combo damage tertinggi dan sustainability yang excellent di late game.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 71.2% | Pick Rate: 52.8%</small>
+                    </div>
+                    <div class="hero-card" onclick="analyzeHero('Phoveus')">
+                        <div class="meta-badge">S-Tier Meta</div>
+                        <h3>Phoveus</h3>
+                        <p>Counter perfect untuk meta mobility heroes, damage scaling yang mengerikan.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 69.8% | Pick Rate: 47.3%</small>
+                    </div>
+                    <div class="hero-card" onclick="analyzeHero('Yu Zhong')">
+                        <div class="meta-badge">A-Tier Meta</div>
+                        <h3>Yu Zhong</h3>
+                        <p>Sustain fighter dengan kemampuan 1v5 yang luar biasa di hands yang tepat.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 64.5% | Pick Rate: 41.2%</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="assassin" class="tab-content">
+                <div class="hero-grid">
+                    <div class="hero-card" onclick="analyzeHero('Ling')">
+                        <div class="meta-badge">S-Tier Meta</div>
+                        <h3>Ling</h3>
+                        <p>Assassin dengan mobility terbaik, perfect untuk split push dan pick off.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 67.9% | Pick Rate: 43.6%</small>
+                    </div>
+                    <div class="hero-card" onclick="analyzeHero('Lancelot')">
+                        <div class="meta-badge">S-Tier Meta</div>
+                        <h3>Lancelot</h3>
+                        <p>High skill cap assassin dengan burst damage yang dapat menghapus carry musuh.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 66.4% | Pick Rate: 39.8%</small>
+                    </div>
+                    <div class="hero-card" onclick="analyzeHero('Hayabusa')">
+                        <div class="meta-badge">A-Tier Meta</div>
+                        <h3>Hayabusa</h3>
+                        <p>Split pusher terbaik dengan escape mechanism yang reliable.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 63.7% | Pick Rate: 35.2%</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="mage" class="tab-content">
+                <div class="hero-grid">
+                    <div class="hero-card" onclick="analyzeHero('Yve')">
+                        <div class="meta-badge">S-Tier Meta</div>
+                        <h3>Yve</h3>
+                        <p>Zone control terbaik dengan damage AOE yang mengerikan di team fight.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 68.7% | Pick Rate: 46.1%</small>
+                    </div>
+                    <div class="hero-card" onclick="analyzeHero('Valentina')">
+                        <div class="meta-badge">S-Tier Meta</div>
+                        <h3>Valentina</h3>
+                        <p>Mage dengan kemampuan steal ultimate yang dapat mengubah meta game.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 65.9% | Pick Rate: 41.5%</small>
+                    </div>
+                    <div class="hero-card" onclick="analyzeHero('Pharsa')">
+                        <div class="meta-badge">A-Tier Meta</div>
+                        <h3>Pharsa</h3>
+                        <p>Long range mage dengan global presence yang dominan di map control.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 62.3% | Pick Rate: 37.8%</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="marksman" class="tab-content">
+                <div class="hero-grid">
+                    <div class="hero-card" onclick="analyzeHero('Beatrix')">
+                        <div class="meta-badge">S-Tier Meta</div>
+                        <h3>Beatrix</h3>
+                        <p>Marksman dengan versatility weapons yang dapat adapt dengan situasi apapun.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 69.1% | Pick Rate: 48.3%</small>
+                    </div>
+                    <div class="hero-card" onclick="analyzeHero('Wanwan')">
+                        <div class="meta-badge">S-Tier Meta</div>
+                        <h3>Wanwan</h3>
+                        <p>High mobility marksman dengan true damage yang dapat melt tank sekalipun.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 66.8% | Pick Rate: 44.7%</small>
+                    </div>
+                    <div class="hero-card" onclick="analyzeHero('Brody')">
+                        <div class="meta-badge">A-Tier Meta</div>
+                        <h3>Brody</h3>
+                        <p>Marksman dengan penetration damage dan slow effect yang annoying.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 63.4% | Pick Rate: 36.9%</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="support" class="tab-content">
+                <div class="hero-grid">
+                    <div class="hero-card" onclick="analyzeHero('Mathilda')">
+                        <div class="meta-badge">S-Tier Meta</div>
+                        <h3>Mathilda</h3>
+                        <p>Support dengan mobility dan utility terbaik untuk team coordination.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 67.2% | Pick Rate: 42.1%</small>
+                    </div>
+                    <div class="hero-card" onclick="analyzeHero('Floryn')">
+                        <div class="meta-badge">A-Tier Meta</div>
+                        <h3>Floryn</h3>
+                        <p>Healing support yang dapat memberikan sustain luar biasa untuk team.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 64.6% | Pick Rate: 38.4%</small>
+                    </div>
+                    <div class="hero-card" onclick="analyzeHero('Estes')">
+                        <div class="meta-badge">A-Tier Meta</div>
+                        <h3>Estes</h3>
+                        <p>Pure healer dengan regeneration yang dapat membuat team hampir immortal.</p>
+                        <small><i class="fas fa-chart-line"></i> Win Rate: 61.8% | Pick Rate: 33.7%</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Items Section -->
+        <section id="items" class="section">
+            <h2><i class="fas fa-gem"></i> Items Meta & Build Guide</h2>
+            <div class="tab-container">
+                <button class="tab-button active" onclick="showItemTab('core')">Core Items</button>
+                <button class="tab-button" onclick="showItemTab('defensive')">Defensive</button>
+                <button class="tab-button" onclick="showItemTab('damage')">Damage</button>
+                <button class="tab-button" onclick="showItemTab('boots')">Boots</button>
+            </div>
+
+            <div id="core" class="tab-content active">
+                <div class="hero-grid">
+                    <div class="hero-card">
+                        <h3><i class="fas fa-star"></i> Blade of Despair</h3>
+                        <p>Core item untuk physical damage dealer. Memberikan raw damage tertinggi dengan passive yang deadly.</p>
+                        <small><i class="fas fa-coins"></i> Price: 3010 Gold | +160 Physical Attack</small>
+                    </div>
+                    <div class="hero-card">
+                        <h3><i class="fas fa-star"></i> Lightning Truncheon</h3>
+                        <p>Must-have item untuk mage dengan mana scaling. Perfect combo dengan Calamity Reaper.</p>
+                        <small><i class="fas fa-coins"></i> Price: 2250 Gold | +75 Magic Power</small>
+                    </div>
+                    <div class="hero-card">
+                        <h3><i class="fas fa-star"></i> Windtalker</h3>
+                        <p>Core item marksman untuk attack speed dan critical chance dengan passive AOE.</p>
+                        <small><i class="fas fa-coins"></i> Price: 1910 Gold | +40% Attack Speed</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="defensive" class="tab-content">
+                <div class="hero-grid">
+                    <div class="hero-card">
+                        <h3><i class="fas fa-shield-alt"></i> Radiant Armor</h3>
+                        <p>Counter perfect untuk magic damage dengan HP regen yang sustainable.</p>
+                        <small><i class="fas fa-coins"></i> Price: 1880 Gold | +950 HP | +52 Magic Defense</small>
+                    </div>
+                    <div class="hero-card">
+                        <h3><i class="fas fa-shield-alt"></i> Antique Cuirass</h3>
+                        <p>Reduces physical damage dan memberikan HP yang substantial untuk tanking.</p>
+                        <small><i class="fas fa-coins"></i> Price: 2170 Gold | +920 HP | +54 Physical Defense</small>
+                    </div>
+                    <div class="hero-card">
+                        <h3><i class="fas fa-shield-alt"></i> Immortality</h3>
+                        <p>Second life item yang crucial untuk carry heroes di late game.</p>
+                        <small><i class="fas fa-coins"></i> Price: 2120 Gold | +800 HP | +40 Physical Defense</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="damage" class="tab-content">
+                <div class="hero-grid">
+                    <div class="hero-card">
+                        <h3><i class="fas fa-fire"></i> Malefic Roar</h3>
+                        <p>Physical penetration item terbaik untuk melawan tank dan fighter.</p>
+                        <small><i class="fas fa-coins"></i> Price: 2060 Gold | +60 Physical Attack</small>
+                    </div>
+                    <div class="hero-card">
+                        <h3><i class="fas fa-fire"></i> Divine Glaive</h3>
+                        <p>Magic penetration yang essential untuk mage di mid-late game.</p>
+                        <small><i class="fas fa-coins"></i> Price: 1970 Gold | +65 Magic Power</small>
+                    </div>
+                    <div class="hero-card">
+                        <h3><i class="fas fa-fire"></i> Hunter Strike</h3>
+                        <p>Hybrid item dengan CDR dan movement speed untuk assassin dan fighter.</p>
+                        <small><i class="fas fa-coins"></i> Price: 2010 Gold | +80 Physical Attack</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="boots" class="tab-content">
+                <div class="hero-grid">
+                    <div class="hero-card">
+                        <h3><i class="fas fa-running"></i> Tough Boots</h3>
+                        <p>Magic resistance boots untuk melawan heavy magic damage team.</p>
+                        <small><i class="fas fa-coins"></i> Price: 700 Gold | +22 Magic Defense</small>
+                    </div>
+                    <div class="hero-card">
+                        <h3><i class="fas fa-running"></i> Warrior Boots</h3>
+                        <p>Physical defense boots yang cocok untuk tank dan fighter.</p>
+                        <small><i class="fas fa-coins"></i> Price: 720 Gold | +22 Physical Defense</small>
+                    </div>
+                    <div class="hero-card">
+                        <h3><i class="fas fa-running"></i> Swift Boots</h3>
+                        <p>Attack speed boots untuk marksman dan some fighter builds.</p>
+                        <small><i class="fas fa-coins"></i> Price: 710 Gold | +15% Attack Speed</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Section -->
+        <section id="news" class="section">
+            <h2><i class="fas fa-newspaper"></i> Berita Terbaru Mobile Legends</h2>
+            <div class="news-grid" id="newsContainer">
+                <div class="loading"></div>
+                <p>Memuat berita terbaru...</p>
+            </div>
+        </section>
+
+        <!-- Live MPL Section -->
+        <section id="live" class="section">
+            <h2><i class="fas fa-tv"></i> Live Stream MPL Indonesia</h2>
+            <div class="youtube-container">
+                <iframe src="https://www.youtube.com/embed/live_stream?channel=UCar7pZyfoPjhqEU8i5DJaRg&autoplay=1&mute=1" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+            <p style="text-align: center; margin-top: 1rem; opacity: 0.8;">
+                <i class="fas fa-info-circle"></i> Live streaming MPL Indonesia official. Jika tidak ada live, akan menampilkan video terbaru.
+            </p>
+        </section>
+
+        <!-- Social Media Section -->
+        <section id="social" class="section">
+            <h2><i class="fas fa-share-alt"></i> Social Media Komunitas</h2>
+            <div class="social-media">
+                <a href="https://discord.gg/pendekarjakal" class="social-link" target="_blank">
+                    <i class="fab fa-discord"></i>
+                    <span>Discord</span>
+                </a>
+                <a href="https://www.instagram.com/pendekarjakal" class="social-link" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://www.youtube.com/c/pendekarjakal" class="social-link" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube</span>
+                </a>
+                <a href="https://www.tiktok.com/@pendekarjakal" class="social-link" target="_blank">
+                    <i class="fab fa-tiktok"></i>
+                    <span>TikTok</span>
+                </a>
+                <a href="https://wa.me/6281234567890" class="social-link" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Smooth scrolling
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Tab functionality for heroes
+        function showTab(tabName) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Add active class to selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Tab functionality for items
+        function showItemTab(tabName) {
+            // Remove active class from all item tabs
+            document.querySelectorAll('#items .tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('#items .tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Add active class to selected item tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Hero analysis function
+        function analyzeHero(heroName) {
+            // Simulate opening external analysis
+            const analysisUrls = {
+                'Khufra': 'https://mobile-legends.fandom.com/wiki/Khufra',
+                'Atlas': 'https://mobile-legends.fandom.com/wiki/Atlas',
+                'Johnson': 'https://mobile-legends.fandom.com/wiki/Johnson',
+                'Paquito': 'https://mobile-legends.fandom.com/wiki/Paquito',
+                'Phoveus': 'https://mobile-legends.fandom.com/wiki/Phoveus',
+                'Yu Zhong': 'https://mobile-legends.fandom.com/wiki/Yu_Zhong',
+                'Ling': 'https://mobile-legends.fandom.com/wiki/Ling',
+                'Lancelot': 'https://mobile-legends.fandom.com/wiki/Lancelot',
+                'Hayabusa': 'https://mobile-legends.fandom.com/wiki/Hayabusa',
+                'Yve': 'https://mobile-legends.fandom.com/wiki/Yve',
+                'Valentina': 'https://mobile-legends.fandom.com/wiki/Valentina',
+                'Pharsa': 'https://mobile-legends.fandom.com/wiki/Pharsa',
+                'Beatrix': 'https://mobile-legends.fandom.com/wiki/Beatrix',
+                'Wanwan': 'https://mobile-legends.fandom.com/wiki/Wanwan',
+                'Brody': 'https://mobile-legends.fandom.com/wiki/Brody',
+                'Mathilda': 'https://mobile-legends.fandom.com/wiki/Mathilda',
+                'Floryn': 'https://mobile-legends.fandom.com/wiki/Floryn',
+                'Estes': 'https://mobile-legends.fandom.com/wiki/Estes'
+            };
+
+            if (analysisUrls[heroName]) {
+                window.open(analysisUrls[heroName], '_blank');
+            }
+        }
+
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random size
+                const size = Math.random() * 6 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // Random position
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                
+                // Random animation delay
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // Simulate loading news
+        function loadNews() {
+            const newsContainer = document.getElementById('newsContainer');
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                newsContainer.innerHTML = `
+                    <div class="news-card">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'><rect width='400' height='200' fill='%23667eea'/><text x='200' y='100' text-anchor='middle' fill='white' font-size='16'>MPL Season 13</text></svg>" alt="MPL News">
+                        <div class="news-card-content">
+                            <h3>MPL Indonesia Season 13 Dimulai!</h3>
+                            <p>Kompetisi Mobile Legends Professional League Indonesia musim ke-13 resmi dimulai dengan format baru dan prize pool yang lebih besar.</p>
+                            <small><i class="fas fa-clock"></i> 2 jam yang lalu</small>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'><rect width='400' height='200' fill='%23764ba2'/><text x='200' y='100' text-anchor='middle' fill='white' font-size='16'>New Hero</text></svg>" alt="New Hero">
+                        <div class="news-card-content">
+                            <h3>Hero Baru "Novaria" Segera Hadir</h3>
+                            <p>Mage dengan kemampuan time manipulation akan segera dirilis di Advanced Server minggu depan.</p>
+                            <small><i class="fas fa-clock"></i> 5 jam yang lalu</small>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'><rect width='400' height='200' fill='%23ff6b35'/><text x='200' y='100' text-anchor='middle' fill='white' font-size='16'>Update</text></svg>" alt="Game Update">
+                        <div class="news-card-content">
+                            <h3>Patch 1.8.44 - Balance Update</h3>
+                            <p>Nerf untuk Paquito dan Beatrix, buff untuk beberapa hero yang kurang populer di ranked game.</p>
+                            <small><i class="fas fa-clock"></i> 1 hari yang lalu</small>
+                        </div>
+                    </div>
+                    <div class="news-card">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'><rect width='400' height='200' fill='%23f7931e'/><text x='200' y='100' text-anchor='middle' fill='white' font-size='16'>Tournament</text></svg>" alt="Tournament">
+                        <div class="news-card-content">
+                            <h3>M6 World Championship 2025</h3>
+                            <p>Turnamen Mobile Legends terbesar tahun ini akan diselenggarakan di Indonesia dengan total hadiah $1,000,000.</p>
+                            <small><i class="fas fa-clock"></i> 2 hari yang lalu</small>
+                        </div>
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        // Auto-refresh news every 30 minutes
+        function autoRefreshNews() {
+            setInterval(loadNews, 1800000); // 30 minutes
+        }
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            loadNews();
+            autoRefreshNews();
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(0, 0, 0, 0.9)';
+            }
+        });
+    </script>
+</body>
+</html>
